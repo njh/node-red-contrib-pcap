@@ -65,7 +65,6 @@
         },
         oneditprepare: function() {
             function loadInterfaces(selectedInterface) {
-                $("#node-input-paths-container").empty();
                 $.getJSON("pcap/interfaces").done(function(data) {
                     $("#node-input-ifname").empty();
                     $.each(data['interfaces'], function(key, value) {
