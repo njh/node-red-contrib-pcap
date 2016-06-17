@@ -44,7 +44,51 @@
 </script>
 
 <script type="text/x-red" data-help-name="pcap">
-    <p>Capture raw packets from a network interface.</p>
+    <p>Capture and decode raw packets from a network interface.</p>
+
+    <p>
+      A single <b>Interface</b> can be chosen for each node instance.
+      The list shows the network interfaces and MAC address of the 
+      interfaces on the Node-RED host system.
+    </p>
+
+    <p>
+      There are three different <b>Output</b> options:
+      <ul>
+        <li>Raw Network packet - outputs a Buffer object containing the binary packet.</li>
+        <li>Decoded pcap objects - the <a href="https://www.npmjs.com/package/pcap">pcap npm package</a>
+            contains a set of packet decoder objects.</li>
+        <li>String - converts the decoded packet objects to string representation.
+            Use the <b>path</b> setting below to choose specific fields.</li>
+      </ul>
+    </p>
+    
+    <p>
+       The <b>Filter</b> setting can be used to filter the network packets received
+       before they get to Node-RED. The syntax is the same as tcpdump/libpcap/wireshark.
+       See the <a href="http://www.tcpdump.org/manpages/pcap-filter.7.html">pcap-filter(7)</a>
+       man page for details of this syntax.
+    </p>
+    
+    <p>
+       The <b>Path</b> setting is only used for the String/Decoded packet outputs. It allows you 
+       you choose a sub-property of packet, rather than outputting the whole packet.
+       The structure is based on the <a href="https://github.com/mranney/node_pcap/tree/master/decode">decode objects</a>
+       within the pcap package. This can be slightly tricky to work out, the documentation
+       recommends exploring the structure using <code>sys.inspect</code>.
+       Call <code>.payload</code> repeatedly to get to higher level protocol headers.
+    
+       <h4>Path Examples</h4>
+       <ul>
+         <li><code>pcap_header.tv_sec</code> the time the packet was recieved</li>
+         <li><code>payload.shost</code> the Layer 2 MAC address of the source of the packet</li>
+         <li><code>payload.dhost</code> the Layer 2 MAC address of the destination of the packet</li>
+         <li><code>payload.ethertype</code> the Layer 2 Ethernet packet type identifier</li>
+         <li><code>payload.payload.saddr</code> the source IP address of the packet</li>
+         <li><code>payload.payload.daddr</code> the destination IP address of the packet</li>
+       </ul>
+    </p>
+
 </script>
 
 <script type="text/javascript">
