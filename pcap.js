@@ -23,8 +23,9 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, n);
         var node = this;
         node.ifname = n.ifname;
-        node.filter = n.filter || null;
         node.output = n.output;
+        node.filter = n.filter || null;
+        node.path = n.path;
         
         if (node.ifname) {
             node.session = pcap.createSession(node.ifname, node.filter);
@@ -34,6 +35,15 @@ module.exports = function(RED) {
                     msg.payload = raw_packet;
                 } else {
                     var decoded = pcap.decode.packet(raw_packet);
+                    
+                    if (node.path) {
+                        var pathParts = node.path.split(".");
+                        pathParts.reduce(function(obj, i) {
+                            decoded = (typeof obj[i] !== "undefined" ? obj[i] : undefined);
+                            return decoded;
+                        }, decoded);
+                    }
+
                     if (node.output == "object") {
                         msg.payload = decoded;
                     } else if (node.output == "string") {

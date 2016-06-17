@@ -34,6 +34,10 @@
         <input type="text" id="node-input-filter" placeholder="optional pcap filter">
     </div>
     <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-ellipsis-h"></i> Path</label>
+        <input type="text" id="node-input-path" placeholder="payload.shost">
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
@@ -51,7 +55,8 @@
             name: {value:""},
             ifname: {value:"", required:true},
             output: {value:"object", required:true},
-            filter: {value:""}
+            filter: {value:""},
+            path: {value:""}
         },
         inputs:0,
         outputs:1,
