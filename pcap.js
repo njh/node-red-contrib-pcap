@@ -24,16 +24,21 @@ module.exports = function(RED) {
         var node = this;
         node.ifname = n.ifname;
         node.filter = n.filter || null;
-        node.decode = n.decode;
+        node.output = n.output;
         
         if (node.ifname) {
             node.session = pcap.createSession(node.ifname, node.filter);
             node.session.on('packet', function (raw_packet) {
                 var msg = {};
-                if (node.decode) {
-                    msg.payload = pcap.decode.packet(raw_packet);
-                } else {
+                if (node.output == "raw") {
                     msg.payload = raw_packet;
+                } else {
+                    var decoded = pcap.decode.packet(raw_packet);
+                    if (node.output == "object") {
+                        msg.payload = decoded;
+                    } else if (node.output == "string") {
+                        msg.payload = String(decoded)
+                    }
                 }
                 msg.topic = node.ifname;
                 node.send(msg);
