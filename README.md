@@ -61,6 +61,24 @@ Call ```.payload``` repeatedly to get to higher level protocol headers.
 _If you have any other configuration tips for other users, please submit a Pull Request for this README._
 
 
+Capturing ARP packets
+---------------------
+
+I originally wrote this Node-RED node in order to receive notifications when I press my 
+[Amazon Dash] wifi button. These buttons, intended for ordering things from Amazon, 
+send out ARP and DHCP packets to the whole network when they are pressed.
+
+These are the settings I use on my Raspberry Pi to detect devices appearing on the network:
+
+* Interface: ```eth0```
+* Output: ```String```
+* Filter: ```arp```
+* Path: ```payload.shost```
+* Name: ```Capture ARP on eth0```
+
+These are the same as the screenshot shown above.
+
+
 Copyright and license
 ---------------------
 
@@ -73,4 +91,5 @@ Copyright 2016 Nicholas Humfrey under [the Apache 2.0 license](LICENSE).
 [decode objects]:   http://github.com/mranney/node_pcap/tree/master/decode
 [pcap-filter(7)]:   http://www.tcpdump.org/manpages/pcap-filter.7.html
 [pcap npm package]: https://www.npmjs.com/package/pcap
+[Amazon Dash]:      http://www.amazon.com/oc/dash-button
 
