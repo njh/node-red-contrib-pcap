@@ -23,7 +23,7 @@ Then change to your node-red installation directory and then run:
 
     npm install node-red-contrib-pcap
 
-You will then be able to see the new _pcap_ node type added to Node-RED's pallet on the left, in the advanced section.
+You will then be able to see the new _pcap_ node type added to Node-RED's pallet on the left, in the _network_ category.
 
 
 Configuration
