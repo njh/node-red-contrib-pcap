@@ -46,7 +46,8 @@ See the [pcap-filter(7)] man page for details of this syntax.
 The *Path* setting is only used for the String/Decoded packet outputs. It allows you 
 you choose a sub-property of packet, rather than outputting the whole packet.
 The structure is based on the [decode objects] within the pcap package. This can be slightly tricky to work out, the documentation
-recommends exploring the structure using ```sys.inspect```.
+recommends exploring the structure using ```sys.inspect``` - in Node-RED this can be 
+done using the _debug_ node.
 Call ```.payload``` repeatedly to get to higher level protocol headers.
     
 #### Path Examples
