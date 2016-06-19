@@ -70,7 +70,8 @@ module.exports = function(RED) {
         var interfaces = os.networkInterfaces();
         Object.keys(interfaces).forEach(function(ifname) {
             var mac = 'unknown';
-            for(var address of interfaces[ifname]) {
+            for(var key in interfaces[ifname]) {
+                var address = interfaces[ifname][key];
                 if (address['mac'] && address['mac'] != '00:00:00:00:00:00') {
                     mac = address.mac;
                     break;
