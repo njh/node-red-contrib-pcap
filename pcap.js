@@ -17,7 +17,7 @@
 module.exports = function(RED) {
     "use strict";
     var os = require('os');
-    var pcap = require('pcap');
+    var pcap = require('pcap2');
 
     function PacketCapture(n) {
         RED.nodes.createNode(this, n);
