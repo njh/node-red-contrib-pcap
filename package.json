@@ -19,7 +19,7 @@
     "node-red"
   ],
   "dependencies": {
-    "pcap": "^2.0.0"
+    "pcap": "^3.0.0"
   },
   "node-red": {
     "nodes": {

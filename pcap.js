@@ -17,7 +17,7 @@
 module.exports = function(RED) {
     "use strict";
     var os = require('os');
-    var pcap = require('pcap2');
+    var pcap = require('pcap');
 
     function PacketCapture(n) {
         RED.nodes.createNode(this, n);
@@ -28,14 +28,14 @@ module.exports = function(RED) {
         node.path = n.path;
         
         if (node.ifname) {
-            node.session = pcap.createSession(node.ifname, node.filter);
+            node.session = pcap.createSession(node.ifname, {filter: node.filter});
             node.session.on('packet', function (raw_packet) {
                 var msg = {};
                 if (node.output == "raw") {
                     msg.payload = raw_packet;
                 } else {
                     var decoded = pcap.decode.packet(raw_packet);
-                    
+                     
                     if (node.path) {
                         var pathParts = node.path.split(".");
                         pathParts.reduce(function(obj, i) {
@@ -47,7 +47,11 @@ module.exports = function(RED) {
                     if (node.output == "object") {
                         msg.payload = decoded;
                     } else if (node.output == "string") {
-                        msg.payload = String(decoded)
+			msg.payload = '';    
+			// workaround for https://github.com/node-pcap/node_pcap/pull/263
+			if (decoded.payload.payload !== null) {
+                           msg.payload = String(decoded);
+			}
                     }
                 }
                 msg.topic = node.ifname;
