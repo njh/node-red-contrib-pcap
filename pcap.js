@@ -17,7 +17,7 @@
 module.exports = function(RED) {
     "use strict";
     var os = require('os');
-    var pcap = require('pcap2');
+    var pcap = require('pcap');
 
     function PacketCapture(n) {
         RED.nodes.createNode(this, n);
@@ -28,7 +28,7 @@ module.exports = function(RED) {
         node.path = n.path;
         
         if (node.ifname) {
-            node.session = pcap.createSession(node.ifname, node.filter);
+            node.session = pcap.createSession(node.ifname, {filter: node.filter});
             node.session.on('packet', function (raw_packet) {
                 var msg = {};
                 if (node.output == "raw") {
@@ -59,7 +59,7 @@ module.exports = function(RED) {
             try {
                 node.session.close();
             } catch (err) {
-                node.error(err);
+                node.error("errpr", err);
             }
         });
     }
