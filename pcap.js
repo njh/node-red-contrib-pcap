@@ -48,7 +48,8 @@ module.exports = function(RED) {
                         msg.payload = decoded;
                     } else if (node.output == "string") {
 			msg.payload = '';    
-			if (decoded.payload !== null) {
+			// workaround for https://github.com/node-pcap/node_pcap/pull/263
+			if (decoded.payload.payload !== null) {
                            msg.payload = String(decoded);
 			}
                     }
