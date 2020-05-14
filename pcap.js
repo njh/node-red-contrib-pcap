@@ -63,7 +63,7 @@ module.exports = function(RED) {
             try {
                 node.session.close();
             } catch (err) {
-                node.error("errpr", err);
+                node.error(err);
             }
         });
     }
