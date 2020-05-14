@@ -35,7 +35,7 @@ module.exports = function(RED) {
                     msg.payload = raw_packet;
                 } else {
                     var decoded = pcap.decode.packet(raw_packet);
-                    
+                     
                     if (node.path) {
                         var pathParts = node.path.split(".");
                         pathParts.reduce(function(obj, i) {
@@ -47,7 +47,10 @@ module.exports = function(RED) {
                     if (node.output == "object") {
                         msg.payload = decoded;
                     } else if (node.output == "string") {
-                        msg.payload = String(decoded)
+			msg.payload = '';    
+			if (decoded.payload !== null) {
+                           msg.payload = String(decoded);
+			}
                     }
                 }
                 msg.topic = node.ifname;
